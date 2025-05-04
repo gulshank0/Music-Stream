@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Music - Collaborative Music Streaming App
+
+
+## Overview
+
+Next Music allows users to:
+- Stream music in real-time
+- Create and manage playlists
+- Upvote songs to change the queue order
+- Collaborate with others on playlist creation
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Music Streaming**: Stream music directly from the browser
+- **Dynamic Queue**: Songs with more upvotes play sooner
+- **Playlist Management**: Create, edit, and share playlists
+- **User Accounts**: Save preferences and favorite tracks
+- **Responsive Design**: Works on desktop and mobile devices
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend**: Next.js, React, Tailwind CSS
+- **State Management**: React Context API
+- **Audio Processing**: Web Audio API
+- **Authentication**: NextAuth.js
+- **Database**: Postgresql
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+next-music/
+├── app/             # Next.js app directory
+├── components/      # Reusable React components
+├── lib/            # Utility functions and helpers
+├── public/         # Static assets
+└── styles/         # Global styles
+```
 
-## Deploy on Vercel
+## Environment Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create a `.env.local` file in the root directory with the following variables:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+# Authentication
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_secret
+
+# Your other API keys
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Thanks for Considering
