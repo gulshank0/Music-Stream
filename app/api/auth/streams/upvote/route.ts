@@ -1,62 +1,48 @@
-import { NextRequest,NextResponse } from "next/server";
-import { z } from "zod";
+import { authOptions } from "@/lib/auth-options";
+import db from "@/lib/db";
 import { getServerSession } from "next-auth";
-import { prismaClient } from "@/app/lib/db";
-
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 const UpvoteSchema = z.object({
-    streamId: z.string()
+  streamId: z.string(),
+  spaceId:z.string()
 });
 
 export async function POST(req: NextRequest) {
-    const session = getServerSession();
-  
-    const user = await prismaClient.user.findFirst({
-        where: {
-            email: session?.user?.email
-        }
-    });
-    if(!user) {
-        return NextResponse.json({
-                    message: "User not authenticated"
-                }, {
-                    status: 401
-                });
-            }
-try {
-const data = UpvoteSchema.parse(await req.json());
+  const session = await getServerSession(authOptions);
 
-await prismaClient.upvote.create({
-    data:{
+  if (!session?.user) {
+    return NextResponse.json(
+      {
+        message: "Unauthenticated",
+      },
+      {
+        status: 403,
+      },
+    );
+  }
+  const user = session.user;
+
+  try {
+    const data = UpvoteSchema.parse(await req.json());
+    await db.upvote.create({
+      data: {
         userId: user.id,
-        streamId: data.streamId
-    }
-})
-}catch (e: unknown) {
-    console.error("Error upvoting stream:", e);
-    return NextResponse.json({
-        message: "Error while upvoting stream",
-        error: e instanceof Error ? e.message : "Unknown error"
-    }, {
-        status: 411
-    });
-
-}}
-
-
-
-export async function GET(req: NextRequest) {
-
-    const createrId = req.nextUrl.searchParams.get("createrId");
-    const streams = await prismaClient.stream.findMany({
-        where: {
-            userId:createrId??""
-        },
+        streamId: data.streamId,
+      },
     });
     return NextResponse.json({
-        streams
+      message: "Done!",
     });
-
-
-
+  } catch (e) {
+    return NextResponse.json(
+      {
+        message: "Error while upvoting",
+      },
+      {
+        status: 403,
+      },
+    );
+  }
 }
